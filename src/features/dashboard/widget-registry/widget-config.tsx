@@ -1,4 +1,5 @@
 import {
+	RiArrowRightDownLine,
 	RiArrowRightLine,
 	RiArrowUpDoubleLine,
 	RiAtLine,
@@ -30,6 +31,7 @@ import { InstallmentExpensesWidget } from "@/features/dashboard/components/widge
 import { InvoicesWidget } from "@/features/dashboard/components/widgets/invoices-widget";
 import { MyAccountsWidget } from "@/features/dashboard/components/widgets/my-accounts-widget";
 import { NotesWidget } from "@/features/dashboard/components/widgets/notes-widget";
+import { OverdueIncomeWidget } from "@/features/dashboard/components/widgets/overdue-income-widget";
 import { PayersWidget } from "@/features/dashboard/components/widgets/payers-widget";
 import { PaymentOverviewWidget } from "@/features/dashboard/components/widgets/payment-overview-widget";
 import { PaymentStatusWidget } from "@/features/dashboard/components/widgets/payment-status-widget";
@@ -110,6 +112,15 @@ export const widgetsConfig: WidgetConfig[] = [
 		icon: <RiWallet3Line className="size-4" />,
 		component: ({ data }) => (
 			<PaymentStatusWidget data={data.paymentStatusData} />
+		),
+	},
+	{
+		id: "overdue-income",
+		title: "Receitas em atraso",
+		subtitle: "Receitas não recebidas com vencimento passado",
+		icon: <RiArrowRightDownLine className="size-4 text-destructive" />,
+		component: ({ data }) => (
+			<OverdueIncomeWidget data={data.overdueIncomeData} />
 		),
 	},
 	{

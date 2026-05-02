@@ -6,6 +6,7 @@ import { fetchDashboardInboxSnapshot } from "./inbox-snapshot-queries";
 import { fetchDashboardInvoices } from "./invoices/invoices-queries";
 import { fetchDashboardNotes } from "./notes/notes-queries";
 import { fetchDashboardCurrentPeriodOverview } from "./overview/current-period-overview-queries";
+import { fetchOverdueIncomeData } from "./overview/overdue-income-queries";
 import { fetchDashboardPeriodOverview } from "./overview/period-overview-queries";
 import { fetchDashboardPayers } from "./payers-queries";
 
@@ -20,6 +21,7 @@ async function fetchDashboardDataInternal(userId: string, period: string) {
 		notesData,
 		allAttachments,
 		inboxSnapshot,
+		overdueIncomeData,
 	] = await Promise.all([
 		fetchDashboardPeriodOverview(userId, period),
 		fetchDashboardAccounts(userId),
@@ -30,6 +32,7 @@ async function fetchDashboardDataInternal(userId: string, period: string) {
 		fetchDashboardNotes(userId),
 		fetchAttachmentsForPeriod(userId, period),
 		fetchDashboardInboxSnapshot(userId),
+		fetchOverdueIncomeData(userId),
 	]);
 
 	const attachmentsSnapshot = allAttachments.reduce(
@@ -71,6 +74,7 @@ async function fetchDashboardDataInternal(userId: string, period: string) {
 		expensesByCategoryData: categoryOverview.expensesByCategoryData,
 		attachmentsSnapshot,
 		inboxSnapshot,
+		overdueIncomeData,
 	};
 }
 
