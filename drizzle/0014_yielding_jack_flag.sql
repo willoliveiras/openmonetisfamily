@@ -1,0 +1,1 @@
+ALTER TABLE "pre_lancamentos" DROP COLUMN "parsed_transaction_type";

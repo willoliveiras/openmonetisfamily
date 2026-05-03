@@ -1,0 +1,2 @@
+ALTER TABLE "preferencias_usuario" ADD COLUMN "system_font" text DEFAULT 'ai-sans' NOT NULL;--> statement-breakpoint
+ALTER TABLE "preferencias_usuario" ADD COLUMN "money_font" text DEFAULT 'ai-sans' NOT NULL;
