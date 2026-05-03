@@ -1,16 +1,6 @@
-import {
-	and,
-	asc,
-	eq,
-	ilike,
-	isNotNull,
-	isNull,
-	lt,
-	not,
-	or,
-} from "drizzle-orm";
+import { and, asc, eq, isNotNull, isNull, lt, or } from "drizzle-orm";
 import { transactions } from "@/db/schema";
-import { ACCOUNT_AUTO_INVOICE_NOTE_PREFIX } from "@/shared/lib/accounts/constants";
+import { excludeAutoInvoiceEntries } from "@/features/dashboard/transaction-filters";
 import { db } from "@/shared/lib/db";
 import { getAdminPayerId } from "@/shared/lib/payers/get-admin-id";
 import { getBusinessDateString } from "@/shared/utils/date";
@@ -65,10 +55,7 @@ export async function fetchOverdueIncomeData(
 				or(isNull(transactions.isSettled), eq(transactions.isSettled, false)),
 				isNotNull(transactions.dueDate),
 				lt(transactions.dueDate, new Date(today)),
-				or(
-					isNull(transactions.note),
-					not(ilike(transactions.note, `${ACCOUNT_AUTO_INVOICE_NOTE_PREFIX}%`)),
-				),
+				excludeAutoInvoiceEntries(),
 			),
 		)
 		.orderBy(asc(transactions.dueDate), asc(transactions.name));
